@@ -1,0 +1,13 @@
+
+.posts {
+    font-size: 25px;
+    margin-left: 10px;
+
+}
+
+.title {
+    margin-top: 5px;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-around;
+}
