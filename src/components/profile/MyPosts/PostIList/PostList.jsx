@@ -2,11 +2,11 @@ import React from 'react';
 import cl from './PostList.module.css'
 import PostItem from "./PostItem/PostItem";
 
-const PostList = () => {
+const PostList = (props) => {
+
     return (
         <div className={cl.list}>
-            <PostItem name="Пост один" likes="15"/>
-            <PostItem name="Пост два" likes="20"/>
+            {props.posts.map(p => (<PostItem key={p.id} name={p.name} likes={p.likes}/>))}
         </div>
     );
 };

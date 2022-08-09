@@ -7,14 +7,17 @@
     margin: 10px;
 }
 
-.item {
+.items a {
     text-decoration: none;
-    color: white;
     font-size: 18px;
     display: block;
     padding-top: 3px;
 }
 
-.active {
-    color: yellow;
+.item {
+    color: white;
+}
+
+.activeLink {
+    color: gold;
 }

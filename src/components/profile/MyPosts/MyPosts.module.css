@@ -2,12 +2,17 @@
 .posts {
     font-size: 25px;
     margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.area {
 
 }
 
-.title {
-    margin-top: 5px;
-    font-size: 20px;
-    display: flex;
-    justify-content: space-around;
+.btn {
+    align-self: flex-end;
+    margin-right: 125px;
+    margin-top: -10px;
 }

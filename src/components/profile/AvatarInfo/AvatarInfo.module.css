@@ -1,0 +1,14 @@
+.avaInfo {
+    display: grid;
+    grid-template-columns: 2fr 8fr;
+}
+
+.avatar__img {
+    width: 100px;
+    margin-top: 10px;
+    margin-left: 25px;
+}
+
+.info {
+    margin-top: 10px;
+}

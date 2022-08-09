@@ -2,14 +2,14 @@ import React from 'react';
 import cl from './Profile.module.css'
 import MyPosts from "./MyPosts/MyPosts";
 import Background from "./Background/Background";
-import Avatar from "./Avatar/Avatar";
+import AvatarInfo from "./AvatarInfo/AvatarInfo";
 
-const Profile = () => {
+const Profile = (props) => {
     return (
         <div>
             <Background/>
-            <Avatar/>
-            <MyPosts/>
+            <AvatarInfo/>
+            <MyPosts posts={props.posts}/>
         </div>
     );
 };
