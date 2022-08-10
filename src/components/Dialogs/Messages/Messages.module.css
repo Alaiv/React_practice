@@ -2,4 +2,31 @@
 .messages__item {
     margin-bottom: 5px;
     font-size: 18px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
+
+.messages__item:nth-child(odd) {
+    justify-content: flex-start;
+}
+
+.messages__item:nth-child(even) {
+    justify-content: flex-end;
+}
+
+.messages__item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.message {
+    width: 250px;
+    height: 50px;
+    background: white;
+    border-radius: 5px;
+    padding: 5px;
+}
+

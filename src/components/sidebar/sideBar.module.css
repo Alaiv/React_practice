@@ -1,0 +1,13 @@
+.sidebar {
+    grid-area: nav;
+    background-color: teal;
+}
+
+.friends {
+    margin-top: 100px;
+}
+
+.friends h1 {
+    text-align: center;
+    color: white;
+}

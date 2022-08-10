@@ -11,10 +11,17 @@ const Pages = (props) => {
     return (
         <div className="app-wrapper__content">
             <Routes>
-                <Route path="/profile" element={<Profile posts={props.posts}/>}/>
-                <Route
-                    path="/dialogs" element={<Dialogs dialog={props.dialog} message={props.message}/>}
+                <Route path="/profile" element={<Profile
+                    state={props.state.profile}
+                    addPost={props.addPost}
+                    textChange={props.textChange}/>
+                }/>
+                <Route path="/dialogs" element={<Dialogs
+                    state={props.state.dialogs}
+                    addMessage={props.addMessage}
+                    msgChangeText={props.msgTextChange}
                 />
+                }/>
                 <Route path="/news" element={<News/>}></Route>
                 <Route path="/music" element={<Music/>}></Route>
                 <Route path="/settings" element={<Settings/>}></Route>

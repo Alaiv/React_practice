@@ -1,17 +1,24 @@
 import React from "react";
 import './App.css';
 import Header from "./components/Header/Header";
-import Nav from "./components/nav/Nav";
+import SideBar from "./components/sidebar/sideBar";
 import {BrowserRouter} from "react-router-dom";
 import Pages from "./components/Pages/Pages";
+
 
 const App = (props) => {
     return (
         <BrowserRouter>
             <div className="app-wrapper ">
                 <Header/>
-                <Nav/>
-                <Pages posts={props.posts} dialog={props.dialogArr} message={props.messageArr}/>
+                <SideBar state={props.state}/>
+                <Pages
+                    state={props.state}
+                    addPost={props.addPost}
+                    textChange={props.textChange}
+                    addMessage={props.addMessage}
+                    msgTextChange={props.msgTextChange}
+                />
             </div>
         </BrowserRouter>
     );
@@ -19,4 +26,5 @@ const App = (props) => {
 
 
 export default App;
+
 
