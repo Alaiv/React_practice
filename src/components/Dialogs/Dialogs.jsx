@@ -2,20 +2,20 @@ import React from 'react';
 import cl from './Dialogs.module.css'
 import Dialog from "./Dialog/Dialog";
 import Messages from "./Messages/Messages";
+import {addMessageActionCreator, changeMsgTextActionCreator} from "../../Redux/dialogsReducer";
 
 const Dialogs = (props) => {
 
-    const dialogRef = React.createRef()
-
     const addMessage = () => {
-        props.addMessage()
+        props.dispatch(addMessageActionCreator())
     }
 
-    const changeText = () => {
-        props.msgChangeText(dialogRef.current.value);
+    const changeText = (e) => {
+        let text = e.target.value
+        props.dispatch(changeMsgTextActionCreator(text))
     }
 
-    const dialogs = props.state.dialogs.map(d => <Dialog key={d.id} name={d.name} link={d.id}/>)
+    const dialogs = props.state.dialogFriends.map(d => <Dialog key={d.id} name={d.name} link={d.id}/>)
     const messages = props.state.messages.map(m => <Messages ava={m.ava} key={m.id} message={m.msg}/>)
 
     return (
@@ -28,12 +28,10 @@ const Dialogs = (props) => {
                 {messages}
                 <div className={cl.dialogArea}>
                 <textarea
-                    ref={dialogRef}
-                    className={cl.area}
-                    value={props.messageText}
+                    value={props.state.messageText}
                     onChange={changeText}
                 />
-                <button onClick={addMessage}>Add message</button>
+                    <button onClick={addMessage}>Add message</button>
                 </div>
             </div>
         </div>

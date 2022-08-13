@@ -13,13 +13,11 @@ const Pages = (props) => {
             <Routes>
                 <Route path="/profile" element={<Profile
                     state={props.state.profile}
-                    addPost={props.addPost}
-                    textChange={props.textChange}/>
+                    dispatch={props.dispatch}/>
                 }/>
                 <Route path="/dialogs" element={<Dialogs
                     state={props.state.dialogs}
-                    addMessage={props.addMessage}
-                    msgChangeText={props.msgTextChange}
+                    dispatch={props.dispatch}
                 />
                 }/>
                 <Route path="/news" element={<News/>}></Route>

@@ -14,10 +14,7 @@ const App = (props) => {
                 <SideBar state={props.state}/>
                 <Pages
                     state={props.state}
-                    addPost={props.addPost}
-                    textChange={props.textChange}
-                    addMessage={props.addMessage}
-                    msgTextChange={props.msgTextChange}
+                    dispatch={props.dispatch}
                 />
             </div>
         </BrowserRouter>

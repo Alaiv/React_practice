@@ -2,23 +2,22 @@ import React from 'react';
 import cl from './MyPosts.module.css'
 import MyButton from "../../button/MyButton";
 import PostList from "./PostIList/PostList";
+import {addPostActionCreator, changeTextActionCreator} from "../../../Redux/profileReducer";
 
 const MyPosts = (props) => {
-    const postRef = React.createRef()
 
-    const addPost = () => {
-        props.addPost();
+    let addPost = () => {
+        props.dispatch(addPostActionCreator());
     }
 
-    const changeText = () => {
-        props.textChange(postRef.current.value)
+    let changeText = (e) => {
+        props.dispatch(changeTextActionCreator(e.target.value))
     }
 
     return (
         <div className={cl.posts}>
             <div className={cl.area}>
                 <textarea
-                    ref={postRef}
                     value={props.postText}
                     onChange={changeText}
                     placeholder='Введите описание поста...'
