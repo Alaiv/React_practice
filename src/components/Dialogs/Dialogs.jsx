@@ -2,17 +2,16 @@ import React from 'react';
 import cl from './Dialogs.module.css'
 import Dialog from "./Dialog/Dialog";
 import Messages from "./Messages/Messages";
-import {addMessageActionCreator, changeMsgTextActionCreator} from "../../Redux/dialogsReducer";
 
 const Dialogs = (props) => {
 
     const addMessage = () => {
-        props.dispatch(addMessageActionCreator())
+        props.onAddMessage()
     }
 
     const changeText = (e) => {
         let text = e.target.value
-        props.dispatch(changeMsgTextActionCreator(text))
+        props.onMsgTextChange(text)
     }
 
     const dialogs = props.state.dialogFriends.map(d => <Dialog key={d.id} name={d.name} link={d.id}/>)

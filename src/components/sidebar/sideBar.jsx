@@ -5,7 +5,8 @@ import Nav from "./navBar/Nav";
 
 
 const SideBar = (props) => {
-    const friends = props.state.sideBar.friends.map(v => (<FriendList id={v.id} ava={v.ava} name={v.name} key={v.id}/>))
+
+    const friends = props.state.friends.map(v => (<FriendList id={v.id} ava={v.ava} name={v.name} key={v.id}/>))
 
     return (
         <div className={cl.sidebar}>
