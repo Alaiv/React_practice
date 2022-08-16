@@ -7,7 +7,7 @@ let initialState = {
         {id: 2, name: 'Пост два', likes: 11},
         {id: 3, name: 'Пост три', likes: 4}
     ],
-        postText: ''
+    postText: ''
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -18,15 +18,16 @@ const profileReducer = (state = initialState, action) => {
                 id: Math.random(),
                 likes: 0
             }
-            const arr = {...state};
-            arr.posts = [...state.posts]
-            arr.posts.push(postItem)
-            arr.postText = '';
-            return arr;
+            return {
+                ...state,
+                posts: [...state.posts, postItem],
+                postText: ''
+            };
         case TEXT_CHANGE:
-            const arrTwo = {...state}
-            arrTwo.postText = action.text;
-            return arrTwo;
+            return {
+                ...state,
+                postText: action.text
+            }
         default:
             return state;
     }

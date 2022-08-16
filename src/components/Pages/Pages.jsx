@@ -6,6 +6,7 @@ import Music from "../Music/Music";
 import Settings from "../Settings/Settings";
 import './../../App.css'
 import DialogsContainer from "../Dialogs/DialogsContainer";
+import UsersContainer from "../Users/UsersContainer";
 
 const Pages = (props) => {
     return (
@@ -15,6 +16,7 @@ const Pages = (props) => {
                 <Route path="/dialogs" element={<DialogsContainer/>}/>
                 <Route path="/news" element={<News/>}></Route>
                 <Route path="/music" element={<Music/>}></Route>
+                <Route path="/users" element={<UsersContainer/>}></Route>
                 <Route path="/settings" element={<Settings/>}></Route>
             </Routes>
         </div>

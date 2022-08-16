@@ -33,15 +33,16 @@ const dialogsReducer = (state = initialState, action) => {
                 id: Math.random(),
                 ava: 'https://pixelbox.ru/wp-content/uploads/2021/05/ava-vk-animal-91.jpg'
             }
-            const arr = {...state};
-            arr.messages = [...state.messages]
-            arr.messages.push(message)
-            arr.messageText = '';
-            return arr;
+            return  {
+                ...state,
+                messages: [...state.messages, message],
+                messageText: ''
+            };
         case MSG_TEXT_CHANGE:
-            const arrTwo = {...state};
-            arrTwo.messageText = action.text;
-            return arrTwo;
+            return {
+                ...state,
+                messageText: action.text
+            };
         default:
             return state;
     }
