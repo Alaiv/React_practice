@@ -1,40 +1,16 @@
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
+const SELECT_PAGE = 'SELECT_PAGE'
+const SET_USERS_COUNT = 'SET_USERS_COUNT'
+const TOGGLE_LOADER = 'TOGGLE_LOADER'
 
 let initialState = {
-    users: [
-        {
-            userItem: {
-                name: 'Sasha',
-                status: 'i am smth very cool',
-                location: 'Russia, Saint-Petersburg'
-            },
-            id: 1,
-            ava: 'https://pixelbox.ru/wp-content/uploads/2021/05/ava-vk-animal-91.jpg',
-            followed: true
-        },
-        {
-            userItem: {
-                name: 'Pasha',
-                status: 'i am smth very cool',
-                location: 'Russia, Moscow'
-            },
-            id: 2,
-            ava: 'https://pixelbox.ru/wp-content/uploads/2021/05/ava-vk-animal-91.jpg',
-            followed: false
-        },
-        {
-            userItem: {
-                name: 'Dima',
-                status: 'i am smth very cool',
-                location: 'Belarus, Minsk'
-            },
-            id: 3,
-            ava: 'https://pixelbox.ru/wp-content/uploads/2021/05/ava-vk-animal-91.jpg',
-            followed: false
-        }
-    ]
+    users: [],
+    pageSize: 5,
+    totalCount: 0,
+    selectedPage: 1,
+    isFetching: true
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -63,18 +39,36 @@ const usersReducer = (state = initialState, action) => {
             }
         case SET_USERS:
             return {
-                ...state, users: [...state.users, ...action.users]
+                ...state, users: [...action.users]
+            }
+        case SELECT_PAGE:
+            return {
+                ...state, selectedPage: action.selectedPage
+            }
+        case SET_USERS_COUNT:
+            return {
+                ...state, totalCount: action.count
+            }
+        case TOGGLE_LOADER:
+            return {
+                ...state, isFetching: action.isFetching
             }
         default:
             return state;
     }
 }
 
-export const followAC = (userId) => ({type: FOLLOW, userId})
+export const onFollow = (userId) => ({type: FOLLOW, userId})
 
-export const unfollowAC = (userId) => ({type: UNFOLLOW, userId})
+export const onUnFollow = (userId) => ({type: UNFOLLOW, userId})
 
-export const setUsersAC = (users) => ({type: SET_USERS, users})
+export const setUsers = (users) => ({type: SET_USERS, users})
+
+export const selectPage = (selectedPage) => ({type: SELECT_PAGE, selectedPage})
+
+export const setTotalUsers = (count) => ({type: SET_USERS_COUNT, count})
+
+export const toggleLoader = (isFetching) => ({type: TOGGLE_LOADER, isFetching})
 
 
 export default usersReducer

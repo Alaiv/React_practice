@@ -1,6 +1,6 @@
 .avaInfo {
     display: grid;
-    grid-template-columns: 2fr 8fr;
+    /*grid-template-columns: 2fr 8fr;*/
 }
 
 .avatar__img {
@@ -11,4 +11,9 @@
 
 .info {
     margin-top: 10px;
+}
+
+.img {
+    max-height: 200px;
+    width: 100%
 }

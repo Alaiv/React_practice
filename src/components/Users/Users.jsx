@@ -1,35 +1,34 @@
 import React from 'react';
+import c from "./Users.module.css";
 import User from "./User/User";
-import c from './Users.module.css'
-
+import userPhoto from "../../images/user.png";
 
 const Users = (props) => {
-
+    const pageCount = Math.ceil(props.totalCount / props.pageSize)
+    const pages = [];
+    for (let i = 1; i <= pageCount; i++) {
+        pages.push(i)
+    }
     return (
         <div>
-            {props.users.map(u => (
-                // <div key={u.id}>
-                //     <div>
-                //         <img className={c.img} src={u.ava} alt=""/>
-                //         {u.followed
-                //             ? <button onClick={() => props.onUnFollow(u.id)}>Unfollow</button>
-                //             : <button onClick={() => props.onFollow(u.id)}>Follow</button>}
-                //     </div>
-                //     <div>
-                //         <span>{u.userItem.name}</span>
-                //         <span>{u.userItem.status}</span>
-                //     </div>
-                //     <div>
-                //         <span>{u.userItem.location}</span>
-                //     </div>
-                // </div>
-                <User key={u.id} name={u.userItem.name} status={u.userItem.status}
-                      ava={u.ava} id={u.id} city={u.userItem.city} followed={u.followed}
-                      onFollow={props.onFollow} onUnFollow={props.onUnFollow}
-                />
-            ))}
+            {pages.slice(0, 20).map(page => {
+                return <span
+                    key={Math.random()}
+                    className={props.selectedPage === page ? c.selected : c.default}
+                    onClick={() => props.updateCurrentPage(page)}
+                >{page}
+                    </span>
+            })}
+            {
+                props.users.map(u => (
+                    <User key={u.id} name={u.name} status={u.status}
+                          ava={u.photos.small !== null ? u.photos.small : userPhoto}
+                          id={u.id} followed={u.followed}
+                          onFollow={props.onFollow} onUnFollow={props.onUnFollow}
+                    />
+                ))}
         </div>
-    );
-};
+    )
+}
 
-export default Users
+export default Users;

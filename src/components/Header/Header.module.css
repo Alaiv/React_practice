@@ -5,3 +5,18 @@
 .header__img {
     max-width: 50px;
 }
+
+.login_window{
+    float: right;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.login_window a {
+    color: white;
+    text-decoration: none;
+}
+
+.ava {
+    max-width: 50px;
+}

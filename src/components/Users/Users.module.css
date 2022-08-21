@@ -1,3 +1,15 @@
 .img {
     max-width: 50px;
 }
+
+.selected {
+    font-weight: bold;
+    font-size: larger;
+    cursor: pointer;
+}
+
+.default {
+    font-size: medium;
+    font-weight: normal;
+    cursor: pointer;
+}
