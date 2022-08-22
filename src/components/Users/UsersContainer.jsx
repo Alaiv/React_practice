@@ -1,28 +1,20 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {onFollow, onUnFollow, selectPage, setTotalUsers, setUsers, toggleLoader} from "../../Redux/usersReducer";
+import {followDisable, selectPage, unfollowDisable, usersGet} from "../../Redux/usersReducer";
 import Users from "./Users";
 import Preloader from "../common/Preloader";
-import {usersAPI} from "../../api/api_requests";
+import withAuth from "../common/withAuth";
+import {compose} from "redux";
 
 class UsersClass extends React.Component {
 
     componentDidMount = () => {
-        this.props.toggleLoader(true)
-        usersAPI.getUsers(this.props.state, this.props.pageSize).then(data => {
-            this.props.toggleLoader(false)
-            this.props.setUsers(data.items)
-            this.props.setTotalUsers(data.totalCount)
-        })
+        this.props.usersGet(this.props.selectedPage, this.props.pageSize)
     }
 
     updateCurrentPage = (page) => {
-        this.props.toggleLoader(true)
         this.props.selectPage(page)
-        usersAPI.getUsers(page, this.props.pageSize).then(data => {
-            this.props.toggleLoader(false)
-            this.props.setUsers(data.items)
-        })
+        this.props.usersGet(this.props.selectedPage, this.props.pageSize)
     }
 
     render() {
@@ -33,8 +25,9 @@ class UsersClass extends React.Component {
                    pageSize={this.props.pageSize}
                    totalCount={this.props.totalCount}
                    updateCurrentPage={this.updateCurrentPage}
-                   onFollow={this.props.onFollow}
-                   onUnFollow={this.props.onUnFollow}
+                   isFollowing={this.props.isFollowing}
+                   unfollowDisable={this.props.unfollowDisable}
+                   followDisable={this.props.followDisable}
             />
         </>
     }
@@ -46,17 +39,17 @@ const mapStateToProps = (state) => {
         pageSize: state.usersp.pageSize,
         totalCount: state.usersp.totalCount,
         selectedPage: state.usersp.selectedPage,
-        isFetching: state.usersp.isFetching
+        isFetching: state.usersp.isFetching,
+        isFollowing: state.usersp.isFollowing,
     }
 }
 
-const UsersContainer = connect(mapStateToProps, {
-    onFollow,
-    onUnFollow,
-    setUsers,
-    selectPage,
-    setTotalUsers,
-    toggleLoader,
-})(UsersClass)
-
-export default UsersContainer;
+export default compose(
+    withAuth,
+    connect(mapStateToProps, {
+        selectPage,
+        usersGet,
+        unfollowDisable,
+        followDisable
+    })
+)(UsersClass);

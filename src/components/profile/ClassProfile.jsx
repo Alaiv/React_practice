@@ -1,17 +1,15 @@
 import React from 'react';
 import Profile from "./Profile";
-import axios from "axios";
 import {connect} from "react-redux";
-import {setUserProfile} from "../../Redux/profileReducer";
+import {getUserProfileInfo, setUserProfile} from "../../Redux/profileReducer";
 import withRouter from "./MyPosts/WithRouter";
+import withAuth from "../common/withAuth";
+import {compose} from "redux";
 
 class ClassProfile extends React.Component {
     componentDidMount() {
         let id = this.props.router.params.id
-        axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + (id === undefined ? "24972" : id))
-            .then(response => {
-                this.props.setUserProfile(response.data)
-            })
+        this.props.getUserProfileInfo(id)
     }
 
     render() {
@@ -24,12 +22,13 @@ class ClassProfile extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return{
-       profile: state.profile.profile
+    return {
+        profile: state.profile.profile,
     }
 }
 
-export default connect(mapStateToProps, {setUserProfile})(withRouter(ClassProfile))
-
-
-// export default ClassProfileContainer;
+export default compose(
+    withAuth,
+    withRouter,
+    connect(mapStateToProps, {setUserProfile, getUserProfileInfo})
+)(ClassProfile)

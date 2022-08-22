@@ -2,10 +2,13 @@ import React from 'react';
 import {addMessageActionCreator, changeMsgTextActionCreator} from "../../Redux/dialogsReducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
+import withAuth from "../common/withAuth";
+import {compose} from "redux";
 
 const mapStateToProps = (state) => {
     return {
-        state: state.dialogs
+        state: state.dialogs,
+        // isAuth: state.auth.isAuth
     }
 }
 
@@ -21,6 +24,10 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+//
+// const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(withAuth(Dialogs))
 
-export default DialogsContainer;
+export default compose(
+    withAuth,
+    connect(mapStateToProps, mapDispatchToProps)
+)(Dialogs);

@@ -2,6 +2,7 @@ import React from 'react';
 import c from "./Users.module.css";
 import User from "./User/User";
 import userPhoto from "../../images/user.png";
+import {followDisable, unfollowDisable} from "../../Redux/usersReducer";
 
 const Users = (props) => {
     const pageCount = Math.ceil(props.totalCount / props.pageSize)
@@ -25,6 +26,10 @@ const Users = (props) => {
                           ava={u.photos.small !== null ? u.photos.small : userPhoto}
                           id={u.id} followed={u.followed}
                           onFollow={props.onFollow} onUnFollow={props.onUnFollow}
+                          isFollowing={props.isFollowing}
+                          disableFollow={props.disableFollow}
+                          unfollowDisable={props.unfollowDisable}
+                          followDisable={props.followDisable}
                     />
                 ))}
         </div>

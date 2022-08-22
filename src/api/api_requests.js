@@ -19,9 +19,23 @@ export const usersAPI = {
     },
     followUser(id){
         return  instance.post('follow/' + id).then(response => response.data)
+    },
+}
+
+export const headerAPI ={
+    getAuthUser() {
+        return instance.get('auth/me').then(response => response.data)
+    },
+    getAuthUserPhoto(id) {
+        return instance.get('profile/' + id).then(response => response.data)
     }
 }
 
+export const profileAPI = {
+    getProfileInfo(id) {
+        return instance.get('profile/' + (id === undefined ? "24972" : id))
+    }
+}
 
 
 

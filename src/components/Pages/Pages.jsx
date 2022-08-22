@@ -7,6 +7,7 @@ import './../../App.css'
 import DialogsContainer from "../Dialogs/DialogsContainer";
 import UsersContainer from "../Users/UsersContainer";
 import ClassProfile from "../profile/ClassProfile";
+import Login from "../login/Login";
 
 const Pages = (props) => {
     return (
@@ -20,6 +21,7 @@ const Pages = (props) => {
                 <Route path="/music" element={<Music/>}></Route>
                 <Route path="/users" element={<UsersContainer/>}></Route>
                 <Route path="/settings" element={<Settings/>}></Route>
+                <Route path="/login" element={<Login/>}></Route>
             </Routes>
         </div>
     );
