@@ -1,5 +1,5 @@
 const ADD_MESSAGE = 'ADD-MESSAGE'
-const MSG_TEXT_CHANGE = 'MSG-TEXT-CHANGE'
+// const MSG_TEXT_CHANGE = 'MSG-TEXT-CHANGE'
 
 
 let initialState = {
@@ -21,7 +21,7 @@ let initialState = {
         {name: 'Leha', id: 4},
         {name: 'Masha', id: 5}
     ],
-    messageText: ''
+    // messageText: ''
 }
 
 const dialogsReducer = (state = initialState, action) => {
@@ -29,7 +29,7 @@ const dialogsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE:
             let message = {
-                msg: state.messageText,
+                msg: action.text,
                 id: Math.random(),
                 ava: 'https://pixelbox.ru/wp-content/uploads/2021/05/ava-vk-animal-91.jpg'
             }
@@ -38,23 +38,23 @@ const dialogsReducer = (state = initialState, action) => {
                 messages: [...state.messages, message],
                 messageText: ''
             };
-        case MSG_TEXT_CHANGE:
-            return {
-                ...state,
-                messageText: action.text
-            };
+        // case MSG_TEXT_CHANGE:
+        //     return {
+        //         ...state,
+        //         messageText: action.text
+        //     };
         default:
             return state;
     }
 }
 
-export const addMessageActionCreator = () => ({type: ADD_MESSAGE})
+export const addMessageActionCreator = (text) => ({type: ADD_MESSAGE, text})
 
-export const changeMsgTextActionCreator = (text) => {
-    return  {
-        type: MSG_TEXT_CHANGE,
-        text: text
-    }
-}
+// export const changeMsgTextActionCreator = (text) => {
+//     return  {
+//         type: MSG_TEXT_CHANGE,
+//         text: text
+//     }
+// }
 
 export default dialogsReducer

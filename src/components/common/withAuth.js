@@ -1,6 +1,6 @@
 import {Navigate} from "react-router-dom";
-import {mapStateToPropsFactory} from "react-redux/es/connect/mapStateToProps";
 import {connect} from "react-redux";
+import {getAuthUserInfo} from "../../Redux/authReducer";
 
 function withAuth(Component) {
     function ComponentWithAuthProp(props) {
@@ -16,7 +16,7 @@ function withAuth(Component) {
         }
     }
 
-    return connect(mapStateToProps)(ComponentWithAuthProp)
+    return connect(mapStateToProps, {getAuthUserInfo})(ComponentWithAuthProp)
 }
 
 export default withAuth

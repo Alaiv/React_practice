@@ -85,7 +85,6 @@ export const disableFollow = (isFetching, id) => ({type: IS_FOLLOWING, isFetchin
 
 export const usersGet = (selectedPage, pageSize) => {
     return (dispatch) => {
-
         dispatch(toggleLoader(true))
         usersAPI.getUsers(selectedPage, pageSize).then(data => {
             dispatch(toggleLoader(false))

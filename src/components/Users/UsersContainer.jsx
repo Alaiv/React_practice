@@ -3,8 +3,15 @@ import {connect} from "react-redux";
 import {followDisable, selectPage, unfollowDisable, usersGet} from "../../Redux/usersReducer";
 import Users from "./Users";
 import Preloader from "../common/Preloader";
-import withAuth from "../common/withAuth";
 import {compose} from "redux";
+import {
+    getIsFetching,
+    getIsFollowing,
+    getPageSize,
+    getSelectedPage,
+    getTotalCount,
+    getUsers
+} from "../../Redux/userSelectors";
 
 class UsersClass extends React.Component {
 
@@ -32,20 +39,31 @@ class UsersClass extends React.Component {
         </>
     }
 }
+//
+// const mapStateToProps = (state) => {
+//     return {
+//         users: state.usersp.users,
+//         pageSize: state.usersp.pageSize,
+//         totalCount: state.usersp.totalCount,
+//         selectedPage: state.usersp.selectedPage,
+//         isFetching: state.usersp.isFetching,
+//         isFollowing: state.usersp.isFollowing,
+//     }
+// }
+
 
 const mapStateToProps = (state) => {
     return {
-        users: state.usersp.users,
-        pageSize: state.usersp.pageSize,
-        totalCount: state.usersp.totalCount,
-        selectedPage: state.usersp.selectedPage,
-        isFetching: state.usersp.isFetching,
-        isFollowing: state.usersp.isFollowing,
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalCount: getTotalCount(state),
+        selectedPage: getSelectedPage(state),
+        isFetching: getIsFetching(state),
+        isFollowing: getIsFollowing(state),
     }
 }
 
 export default compose(
-    withAuth,
     connect(mapStateToProps, {
         selectPage,
         usersGet,

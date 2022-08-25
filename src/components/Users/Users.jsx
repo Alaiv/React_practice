@@ -12,7 +12,7 @@ const Users = (props) => {
     }
     return (
         <div>
-            {pages.slice(0, 20).map(page => {
+            {pages.slice(4050, 4070).map(page => {
                 return <span
                     key={Math.random()}
                     className={props.selectedPage === page ? c.selected : c.default}
@@ -25,9 +25,7 @@ const Users = (props) => {
                     <User key={u.id} name={u.name} status={u.status}
                           ava={u.photos.small !== null ? u.photos.small : userPhoto}
                           id={u.id} followed={u.followed}
-                          onFollow={props.onFollow} onUnFollow={props.onUnFollow}
                           isFollowing={props.isFollowing}
-                          disableFollow={props.disableFollow}
                           unfollowDisable={props.unfollowDisable}
                           followDisable={props.followDisable}
                     />

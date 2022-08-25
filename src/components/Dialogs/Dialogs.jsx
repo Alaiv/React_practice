@@ -2,19 +2,40 @@ import React from 'react';
 import cl from './Dialogs.module.css'
 import Dialog from "./Dialog/Dialog";
 import Messages from "./Messages/Messages";
-import { Navigate } from "react-router-dom"
+import {Field, reduxForm} from "redux-form";
+import {ultimateForm} from "../common/FormControls/FormAssets";
+import {maxLength, minLength, required} from "../../utilities/validator";
+
+let maxL20 = maxLength(20)
+let minL3 = minLength(3)
+const someFunc = (props) => {
+    return ultimateForm({...props},'textarea')
+}
+
+const DialogArea = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div className={cl.dialogArea}>
+                <Field
+                    placeholder={'Введитe описание поста...'}
+                    name={'dialogArea'}
+                    component={someFunc}
+                    validate={[required, maxL20, minL3]}
+                />
+                <button>Add message</button>
+            </div>
+        </form>
+    )
+}
+
+const DialogReduxArea = reduxForm({
+    form: 'dialogsArea'
+})(DialogArea)
 
 const Dialogs = (props) => {
-
-    const addMessage = () => {
-        props.onAddMessage()
+    const onSubmit = (formData) => {
+        props.addMessageActionCreator(formData.dialogArea)
     }
-
-    const changeText = (e) => {
-        let text = e.target.value
-        props.onMsgTextChange(text)
-    }
-
     const dialogs = props.state.dialogFriends.map(d => <Dialog key={d.id} name={d.name} link={d.id}/>)
     const messages = props.state.messages.map(m => <Messages ava={m.ava} key={m.id} message={m.msg}/>)
 
@@ -26,13 +47,7 @@ const Dialogs = (props) => {
             </div>
             <div className={cl.messages__list}>
                 {messages}
-                <div className={cl.dialogArea}>
-                <textarea
-                    value={props.state.messageText}
-                    onChange={changeText}
-                />
-                    <button onClick={addMessage}>Add message</button>
-                </div>
+                <DialogReduxArea onSubmit={onSubmit}/>
             </div>
         </div>
     );

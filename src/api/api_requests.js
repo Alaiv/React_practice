@@ -28,12 +28,32 @@ export const headerAPI ={
     },
     getAuthUserPhoto(id) {
         return instance.get('profile/' + id).then(response => response.data)
+    },
+    authorizeUser(data) {
+        return instance.post('auth/login/', {
+            email: data.login,
+            password: data.password,
+            rememberMe: data.rememberMe || false,
+            captcha: data.captcha || ''
+        })
+    },
+    unAuthorizeUser() {
+        return instance.delete('auth/login')
+    },
+    getCaptcha() {
+        return instance.get('security/get-captcha-url')
     }
 }
 
 export const profileAPI = {
     getProfileInfo(id) {
-        return instance.get('profile/' + (id === undefined ? "24972" : id))
+        return instance.get('profile/' + id)
+    },
+    getProfileStatus(id) {
+        return instance.get('profile/status/' + id)
+    },
+    putProfileStatus(status) {
+        return instance.put('profile/status', {status: status})
     }
 }
 

@@ -1,0 +1,19 @@
+.area.error input,
+.area.error textarea
+{
+    border: 2px solid red;
+    outline: none;
+}
+
+.area.error span {
+    color: red;
+}
+
+.massError {
+    border: 2px solid red;
+    padding: 5px;
+    color: firebrick;
+    margin-top: 10px;
+    width: 240px;
+    border-radius: 5px;
+}

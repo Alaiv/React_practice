@@ -1,21 +1,31 @@
 import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getUserProfileInfo, setUserProfile} from "../../Redux/profileReducer";
+import {getUserProfileInfo, getUserStatus, setUserProfile, updateUserStatus} from "../../Redux/profileReducer";
 import withRouter from "./MyPosts/WithRouter";
-import withAuth from "../common/withAuth";
 import {compose} from "redux";
+
 
 class ClassProfile extends React.Component {
     componentDidMount() {
         let id = this.props.router.params.id
+        if(!id){
+             id = this.props.usid
+            if(!id) {
+              return setTimeout(() => {this.props.router.navigate('/login', {replace: true})})
+            }
+        }
+        this.props.getUserStatus(id)
         this.props.getUserProfileInfo(id)
     }
 
     render() {
         return (
             <div>
-                <Profile {...this.props} profile={this.props.profile}/>
+                <Profile {...this.props} profile={this.props.profile}
+                         status={this.props.status}
+                         updateUserStatus={this.props.updateUserStatus}
+                />
             </div>
         );
     }
@@ -24,11 +34,13 @@ class ClassProfile extends React.Component {
 const mapStateToProps = (state) => {
     return {
         profile: state.profile.profile,
+        status: state.profile.status,
+        usid: state.auth.id,
+        isAuth: state.auth.isAuth
     }
 }
 
 export default compose(
-    withAuth,
     withRouter,
-    connect(mapStateToProps, {setUserProfile, getUserProfileInfo})
+    connect(mapStateToProps, {setUserProfile, getUserProfileInfo, getUserStatus, updateUserStatus})
 )(ClassProfile)

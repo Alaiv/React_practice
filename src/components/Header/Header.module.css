@@ -1,13 +1,17 @@
 .header {
     grid-area: header;
     background-color: teal;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 .header__img {
     max-width: 50px;
 }
 
 .login_window{
-    float: right;
+    /*float: right;*/
     font-size: 20px;
     padding: 10px;
 }
@@ -19,4 +23,15 @@
 
 .ava {
     max-width: 50px;
+}
+
+.btn {
+    align-self: flex-start;
+    margin-right: 10px;
+    height: 25px;
+    background-color: white;
+    border: none;
+    position: relative;
+    bottom: 5px;
+    cursor: pointer;
 }

@@ -8,26 +8,11 @@ import {compose} from "redux";
 const mapStateToProps = (state) => {
     return {
         state: state.dialogs,
-        // isAuth: state.auth.isAuth
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onAddMessage: () => {
-            dispatch(addMessageActionCreator())
-        },
-        onMsgTextChange: (txt) => {
-            dispatch(changeMsgTextActionCreator(txt))
-        }
-    }
-}
-
-
-//
-// const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(withAuth(Dialogs))
 
 export default compose(
     withAuth,
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(mapStateToProps, {addMessageActionCreator})
 )(Dialogs);
