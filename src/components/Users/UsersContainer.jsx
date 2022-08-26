@@ -10,7 +10,7 @@ import {
     getPageSize,
     getSelectedPage,
     getTotalCount,
-    getUsers
+    getUsers, superGetUsers
 } from "../../Redux/userSelectors";
 
 class UsersClass extends React.Component {
@@ -39,22 +39,10 @@ class UsersClass extends React.Component {
         </>
     }
 }
-//
-// const mapStateToProps = (state) => {
-//     return {
-//         users: state.usersp.users,
-//         pageSize: state.usersp.pageSize,
-//         totalCount: state.usersp.totalCount,
-//         selectedPage: state.usersp.selectedPage,
-//         isFetching: state.usersp.isFetching,
-//         isFollowing: state.usersp.isFollowing,
-//     }
-// }
-
 
 const mapStateToProps = (state) => {
     return {
-        users: getUsers(state),
+        users: superGetUsers(state),
         pageSize: getPageSize(state),
         totalCount: getTotalCount(state),
         selectedPage: getSelectedPage(state),
