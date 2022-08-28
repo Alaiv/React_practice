@@ -1,4 +1,5 @@
 import {usersAPI} from "../api/api_requests";
+import {mapHelper} from "../components/common/Helper";
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -23,23 +24,12 @@ const usersReducer = (state = initialState, action) => {
         case FOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: true}
-                    }
-                    return u;
-                })
-
+                users: mapHelper(state.users, action.userId, 'id', {followed: true})
             }
         case UNFOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: false}
-                    }
-                    return u;
-                })
+                users: mapHelper(state.users, action.userId, 'id', {followed: false})
             }
         case SET_USERS:
             return {
@@ -95,29 +85,29 @@ export const usersGet = (selectedPage, pageSize) => {
 }
 
 
+const followUnfollow = async (dispatch, userId, apiCall, actionC) => {
+    dispatch(disableFollow(true, userId))
+    const data = await apiCall(userId)
+    if (data.resultCode === 0) {
+        dispatch(actionC(userId))
+    }
+    dispatch(disableFollow(false, userId))
+}
+
+
 export const unfollowDisable = (userId) => {
-    return (dispatch) => {
-        dispatch(disableFollow(true, userId))
-        usersAPI.unFollowUser(userId)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(onUnFollow(userId))
-                }
-                dispatch(disableFollow(false, userId))
-            })
+    return async (dispatch) => {
+        const apiCall = usersAPI.unFollowUser.bind(usersAPI)
+
+        await followUnfollow(dispatch, userId, apiCall, onUnFollow)
     }
 }
 
 export const followDisable = (userId) => {
-    return (dispatch) => {
-        dispatch(disableFollow(true, userId))
-        usersAPI.followUser(userId)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(onFollow(userId))
-                }
-                dispatch(disableFollow(false, userId))
-            })
+    return async (dispatch) => {
+        const apiCall = usersAPI.followUser.bind(usersAPI)
+
+        await followUnfollow(dispatch, userId, apiCall, onFollow)
     }
 }
 

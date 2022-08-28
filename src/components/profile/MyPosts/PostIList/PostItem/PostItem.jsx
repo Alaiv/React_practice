@@ -1,12 +1,16 @@
 import React from 'react';
 import cl from './PostItem.module.css'
 
-const PostItem = (props) => {
+const PostItem = ({id, name, likes, deletePost}) => {
+    const removePosts = () => {
+        deletePost(id)
+    }
     return (
         <div className={cl.item}>
             <i className={cl.circle}></i>
-            {props.name}
-            <span>Likes: {props.likes}</span>
+            {name}
+            <span>Likes: {likes}</span>
+            <button onClick={removePosts}>Удалить пост</button>
         </div>
     );
 };

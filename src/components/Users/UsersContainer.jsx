@@ -10,18 +10,20 @@ import {
     getPageSize,
     getSelectedPage,
     getTotalCount,
-    getUsers, superGetUsers
+    superGetUsers
 } from "../../Redux/userSelectors";
 
 class UsersClass extends React.Component {
 
     componentDidMount = () => {
-        this.props.usersGet(this.props.selectedPage, this.props.pageSize)
+        const {selectedPage, pageSize} = this.props
+        this.props.usersGet(selectedPage, pageSize)
     }
 
     updateCurrentPage = (page) => {
         this.props.selectPage(page)
-        this.props.usersGet(this.props.selectedPage, this.props.pageSize)
+        const {pageSize} = this.props
+        this.props.usersGet(page, pageSize)
     }
 
     render() {

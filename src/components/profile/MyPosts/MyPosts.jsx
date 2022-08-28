@@ -1,21 +1,25 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import cl from './MyPosts.module.css'
 import MyButton from "../../button/MyButton";
 import PostList from "./PostIList/PostList";
 import {Field, reduxForm} from "redux-form";
 import {maxLength, minLength, required} from "../../../utilities/validator";
 import {ultimateForm} from "../../common/FormControls/FormAssets";
+import login from "../../login/Login";
+import {deletePost} from "../../../Redux/profileReducer";
 
 let maxL25 = maxLength(25)
 let minL2 = minLength(2)
 const someFunc = (props) => {
-    return ultimateForm({...props},'input')
+    return ultimateForm({...props}, 'input')
 }
 
 const PostsText = (props) => {
+
     return (
         <form onSubmit={props.handleSubmit}>
-            <div><Field placeholder={'Введите описание поста...'} name={'area'} component={someFunc} validate={[required, maxL25, minL2]}/></div>
+            <div><Field placeholder={'Введите описание поста...'} name={'area'} component={someFunc}
+                        validate={[required, maxL25, minL2]}/></div>
             <MyButton>Добавить пост</MyButton>
         </form>
     );
@@ -26,7 +30,7 @@ const PostsTextRedux = reduxForm({
 })(PostsText)
 
 
-const MyPosts = (props) => {
+const MyPosts = React.memo(props => {
     const onSubmit = (formData) => {
         props.addPostActionCreator(formData.area)
         formData.area = ''
@@ -35,9 +39,9 @@ const MyPosts = (props) => {
     return (
         <div className={cl.posts}>
             <PostsTextRedux onSubmit={onSubmit}/>
-            <PostList posts={props.state.posts}/>
+            <PostList posts={props.posts} deletePost={props.deletePost}/>
         </div>
     );
-};
+})
 
 export default MyPosts;

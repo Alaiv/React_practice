@@ -1,16 +1,12 @@
 import {profileAPI} from "../api/api_requests";
 
 const ADD_POST = 'ADD-POST'
-// const TEXT_CHANGE = 'TEXT-CHANGE'
 const SET_PROFILE = 'SET_PROFILE'
 const SET_STATUS = 'SET_STATUS'
+const DELETE_POST = 'DELETE_POST'
 
 let initialState = {
-    posts: [
-        {id: 1, name: 'Пост один', likes: 15},
-        {id: 2, name: 'Пост два', likes: 11},
-        {id: 3, name: 'Пост три', likes: 4}
-    ],
+    posts: [],
     profile: null,
     status: ''
 }
@@ -26,13 +22,7 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: [...state.posts, postItem],
-                // postText: ''
             };
-        // case TEXT_CHANGE:
-        //     return {
-        //         ...state,
-        //         postText: action.text
-        //     }
         case SET_PROFILE:
             return {
                 ...state,
@@ -43,6 +33,13 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 status: action.status
             }
+        case DELETE_POST:
+            return {
+                ...state,
+                posts: [...state.posts.filter(val => {
+                   return  val.id !== action.id
+                })]
+            }
         default:
             return state;
     }
@@ -50,13 +47,11 @@ const profileReducer = (state = initialState, action) => {
 
 export const addPostActionCreator = (text) => ({type: ADD_POST, text})
 
-// export const changeTextActionCreator = (text) => {
-//     return {type: TEXT_CHANGE, text: text}
-// }
-
 export const setUserProfile = (profile) => ({type: SET_PROFILE, profile})
 
 export const setStatus = (status) => ({type: SET_STATUS, status})
+
+export const deletePost = (id) => ({type: DELETE_POST, id})
 
 
 export const getUserProfileInfo = (id) => {

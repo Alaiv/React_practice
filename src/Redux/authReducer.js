@@ -3,7 +3,7 @@ import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'SET_USER_DATA'
 const IS_FETCHING = 'IS_FETCHING'
-// const SET_AVATAR = 'SET_AVATAR'
+ const SET_AVATAR = 'SET_AVATAR'
 const GET_CAPTCHA = 'GET_CAPTCHA'
 
 
@@ -15,7 +15,7 @@ let initialState = {
     isAuth: false,
     captcha: '',
     hideCaptcha: true,
-    avatar: 'https://pbs.twimg.com/profile_images/1381794212329353216/GUB0WjQg_400x400.jpg'
+    avatar: ''
 }
 
 const authReducer = (state = initialState, action) => {
@@ -26,10 +26,10 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 ...action.data
             }
-        // case SET_AVATAR:
-        //     return {
-        //         ...state, avatar: action.ava
-        //     }
+        case SET_AVATAR:
+            return {
+                ...state, avatar: action.ava
+            }
         case GET_CAPTCHA:
             return {
                 ...state, captcha: action.url, hideCaptcha: action.hide,
@@ -45,7 +45,7 @@ export const setUserData = (id, email, login, isAuth) => ({
 })
 export const toggleLoader = (fetching) => ({type: IS_FETCHING, fetching})
 export const setCaptcha = (url, hide) => ({type: GET_CAPTCHA, url, hide})
-// export const setAvatar = (ava) => ({type: SET_AVATAR, ava})
+export const setAvatar = (ava) => ({type: SET_AVATAR, ava})
 
 export const getAuthUserInfo = () => dispatch => {
     dispatch(toggleLoader(true))
@@ -64,9 +64,9 @@ export const getAuthUserInfo = () => dispatch => {
 
 
 export const getLoginValues = (val) => {
-    return dispatch => {
-        headerAPI.authorizeUser(val)
-            .then(response => {
+    return async dispatch => {
+        let response = await headerAPI.authorizeUser(val)
+
                 if (response.data.resultCode === 0) {
                     dispatch(setCaptcha('', true))
                     dispatch(getAuthUserInfo())
@@ -80,7 +80,6 @@ export const getLoginValues = (val) => {
                     let msg = response.data.messages.length > 0 ? response.data.messages[0] : 'Undefined error'
                     dispatch(stopSubmit('login', {_error: msg}))
                 }
-            })
     }
 }
 
