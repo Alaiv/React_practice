@@ -9,7 +9,6 @@ import Preloader from "./components/common/Preloader";
 import {initializeApp} from "./Redux/appReducer";
 import store from "./Redux/reduxStore";
 
-
 const MainApp = (props) => {
     return (
         <Provider store={store}>
