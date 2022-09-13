@@ -1,12 +1,10 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import cl from './MyPosts.module.css'
 import MyButton from "../../button/MyButton";
 import PostList from "./PostIList/PostList";
 import {Field, reduxForm} from "redux-form";
 import {maxLength, minLength, required} from "../../../utilities/validator";
 import {ultimateForm} from "../../common/FormControls/FormAssets";
-import login from "../../login/Login";
-import {deletePost} from "../../../Redux/profileReducer";
 
 let maxL25 = maxLength(25)
 let minL2 = minLength(2)

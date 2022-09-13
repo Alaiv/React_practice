@@ -13,9 +13,8 @@ const ProfileStatusFunc = (props) => {
         <>
             {
                 !editMode &&
-                <div onDoubleClick={() => setEditMode(true)}
-                >
-                    {props.status || 'Введите статус'}
+                <div onDoubleClick={() => setEditMode(true)}>
+                   <b>My status: </b> {props.status || 'Введите статус'}
                 </div>
             }
             {

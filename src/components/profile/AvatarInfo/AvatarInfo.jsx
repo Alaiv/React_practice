@@ -5,15 +5,18 @@ import ProfileStatusFunc from "../ProfileStatusFunc";
 import ProfileItem from "./ProfileItem";
 
 const AvatarInfo = (props) => {
-    console.log(props.profile)
-
     if(!props.profile) {
         return <Preloader/>
     }
+
     return (
         <div className={cl.avaInfo}>
-            <ProfileItem {...props}/>
-            <ProfileStatusFunc updateUserStatus={props.updateUserStatus} status={props.status}/>
+            <ProfileStatusFunc  updateUserStatus={props.updateUserStatus} status={props.status}/>
+            <ProfileItem {...props} isOwner={props.isOwner}
+                         addAvatar={props.addAvatar}
+                         addProfileInfo={props.addProfileInfo}
+                         isUpdated={props.isUpdated}
+            />
         </div>
     );
 };

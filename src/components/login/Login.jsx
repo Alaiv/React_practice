@@ -32,7 +32,8 @@ export const LoginForm = (props) => {
                     <span>{props.error}</span>
                 </div>
                 : ''}
-            <div hidden={props.hide}><Field type="text" name={'captcha'} component={'input'}/>Капча</div>
+            {props.captcha && <Field type="text" name={'captcha'} component={someFunc}/>}
+            {props.captcha && <div><img src={props.captcha}/></div>}
         </form>
     );
 };
@@ -51,8 +52,7 @@ const Login = (props) => {
     return (
         <div>
             <h1>Login</h1>
-            <LoginReduxForm onSubmit={onSubmit} hide={props.hideCaptcha}/>
-            <div><img src={props.captcha}/></div>
+            <LoginReduxForm onSubmit={onSubmit} captcha={props.captcha}/>
         </div>
     );
 };
@@ -60,9 +60,7 @@ const Login = (props) => {
 const mapStateToProps = (state) => {
     return {
         isAuth: state.auth.isAuth,
-        // errMsg: state.auth.errMsg,
         captcha: state.auth.captcha,
-        hideCaptcha: state.auth.hideCaptcha
     }
 }
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import cl from './PostList.module.css'
 import PostItem from "./PostItem/PostItem";
-import {deletePost} from "../../../../Redux/profileReducer";
 
 const PostList = (props) => {
 

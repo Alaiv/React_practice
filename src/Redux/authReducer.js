@@ -3,7 +3,7 @@ import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'SET_USER_DATA'
 const IS_FETCHING = 'IS_FETCHING'
- const SET_AVATAR = 'SET_AVATAR'
+const SET_AVATAR = 'SET_AVATAR'
 const GET_CAPTCHA = 'GET_CAPTCHA'
 
 
@@ -13,18 +13,16 @@ let initialState = {
     login: null,
     isFetching: false,
     isAuth: false,
-    captcha: '',
-    hideCaptcha: true,
+    captcha: null,
     avatar: ''
 }
 
 const authReducer = (state = initialState, action) => {
-
     switch (action.type) {
         case SET_USER_DATA:
             return {
                 ...state,
-                ...action.data
+                ...action.payLoad
             }
         case SET_AVATAR:
             return {
@@ -32,7 +30,7 @@ const authReducer = (state = initialState, action) => {
             }
         case GET_CAPTCHA:
             return {
-                ...state, captcha: action.url, hideCaptcha: action.hide,
+                ...state, captcha: action.url
             }
         default:
             return state;
@@ -40,24 +38,24 @@ const authReducer = (state = initialState, action) => {
 }
 
 export const setUserData = (id, email, login, isAuth) => ({
-    type: SET_USER_DATA,
-    data: {id, email, login, isAuth}
+    type: SET_USER_DATA, payLoad: {id, email, login, isAuth}
 })
 export const toggleLoader = (fetching) => ({type: IS_FETCHING, fetching})
-export const setCaptcha = (url, hide) => ({type: GET_CAPTCHA, url, hide})
+export const setCaptcha = (url) => ({type: GET_CAPTCHA, url})
 export const setAvatar = (ava) => ({type: SET_AVATAR, ava})
 
-export const getAuthUserInfo = () => dispatch => {
-    dispatch(toggleLoader(true))
-
-    return headerAPI.getAuthUser()
-        .then(data => {
-            dispatch(toggleLoader(false))
-            if (data.resultCode === 0) {
-                let {id, email, login} = data.data
-                dispatch(setUserData(id, email, login, true))
-            }
-        })
+export const getAuthUserInfo = () => async dispatch => {
+    try {
+        dispatch(toggleLoader(true))
+        const data = await headerAPI.getAuthUser()
+        dispatch(toggleLoader(false))
+        if (data.resultCode === 0) {
+            let {id, email, login} = data.data
+            dispatch(setUserData(id, email, login, true))
+        }
+    } catch (error) {
+        console.error(error)
+    }
 
 
 }
@@ -65,32 +63,26 @@ export const getAuthUserInfo = () => dispatch => {
 
 export const getLoginValues = (val) => {
     return async dispatch => {
-        let response = await headerAPI.authorizeUser(val)
+        const response = await headerAPI.authorizeUser(val)
+        if (response.data.resultCode === 0) {
+            dispatch(getAuthUserInfo())
+            dispatch(setCaptcha(null))
+        } else {
+            if (response.data.resultCode === 10) {
+                const response = await headerAPI.getCaptcha()
+                dispatch(setCaptcha(response.data.url))
+            }
+            let msg = response.data.messages.length > 0 ? response.data.messages[0] : 'Undefined error'
+            dispatch(stopSubmit('login', {_error: msg}))
+        }
 
-                if (response.data.resultCode === 0) {
-                    dispatch(setCaptcha('', true))
-                    dispatch(getAuthUserInfo())
-                }
-                if (response.data.resultCode === 10) {
-                    headerAPI.getCaptcha()
-                        .then(response => {
-                            dispatch(setCaptcha(response.data.url, false))
-                        })
-                } else if (response.data.resultCode === 1) {
-                    let msg = response.data.messages.length > 0 ? response.data.messages[0] : 'Undefined error'
-                    dispatch(stopSubmit('login', {_error: msg}))
-                }
     }
 }
 
-export const unAuthorizeUser = () => {
-    return dispatch => {
-        headerAPI.unAuthorizeUser()
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(setUserData(null, null, null, false))
-                }
-            })
+export const unAuthorizeUser = () => async dispatch => {
+    const response = await headerAPI.unAuthorizeUser()
+    if (response.data.resultCode === 0) {
+        dispatch(setUserData(null, null, null, false))
     }
 }
 
